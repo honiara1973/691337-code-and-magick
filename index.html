@@ -182,6 +182,7 @@
 </template>
 
 <script>
+  var PROPORTIONOFWIZARD = 1.337;
   var fireballSize = 22;
   var wizardSpeed = 3;
   var wizardWidth = 70;
@@ -191,15 +192,15 @@
   };
     
   var getWizardHeight = function (wizardWidth) {
-    return 1.337 * wizardWidth;
+    return PROPORTIONOFWIZARD * wizardWidth;
   };
   
   var getWizardX = function (width) {
-	return width / 2 - wizardWidth /2;
+	return (width - wizardWidth) / 2;
   };
   
   var getWizardY = function (height) {
-	return height - height / 3 * 2 - getWizardHeight(wizardWidth);
+	return height / 3 - getWizardHeight(wizardWidth);
   };	 
   
 </script>

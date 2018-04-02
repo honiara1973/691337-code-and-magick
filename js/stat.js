@@ -56,8 +56,7 @@ window.renderStatistics = function (ctx, names, times) {
       ctx.fillStyle = 'rgb(0, 0, ' + getRandomInt(1, 256) + ')';
     }
 
-    ctx.fillRect(positionX, CLOUD_Y + CLOUD_HEIGHT - GAP - FONT_GAP - heightOfRect,
-        BAR_WIDTH, heightOfRect);
+    ctx.fillRect(positionX, CLOUD_Y + CLOUD_HEIGHT - GAP - FONT_GAP - heightOfRect, BAR_WIDTH, heightOfRect);
 
     ctx.fillStyle = '#000';
     ctx.fillText(names[i], positionX, CLOUD_Y + CLOUD_HEIGHT - GAP);

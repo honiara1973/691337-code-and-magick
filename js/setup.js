@@ -17,7 +17,11 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
 var randomWizards = [];
 
 var getRandomInt = function (min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor(Math.random() * (max + 1 - min)) + min;
+};
+
+var getRandomElement = function (array) {
+  return array[getRandomInt(0, array.length - 1)];
 };
 
 var randomWizardName = function () {
@@ -28,8 +32,8 @@ var randomWizardName = function () {
 for (var i = 0; i < WIZARDS_AMOUNT; i++) {
   var randomWizard = {
     name: randomWizardName(),
-    coatColor: COAT_COLORS[getRandomInt(0, COAT_COLORS.length - 1)],
-    eyesColor: EYES_COLORS[getRandomInt(0, EYES_COLORS.length - 1)]
+    coatColor: getRandomElement(COAT_COLORS),
+    eyesColor: getRandomElement(EYES_COLORS)
   };
   randomWizards.push(randomWizard);
 }

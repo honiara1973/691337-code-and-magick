@@ -7,14 +7,30 @@ var WIZARDS_FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мари�
 var WIZARDS_LAST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var FIREBALL_WRAP_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var userDialog = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = userDialog.querySelector('.setup-close');
 var userNameInput = userDialog.querySelector('.setup-user-name');
-var setupSubmit = userDialog.querySelector('.setup-submit');
+//var setupSubmit = userDialog.querySelector('.setup-submit');
 
-var onPopupEscPress = function (evt) {      //не сделано, если фокус на поле ввода имени, то зактрываться не должно
+var setupWizardAppearance = document.querySelector('.setup-wizard-appearance');
+var setupWizardEyes = setupWizardAppearance.querySelector('.wizard-eyes');
+var setupFireballWrap = document.querySelector('.setup-fireball-wrap');
+var setupInputEyesColor = setupWizardAppearance.querySelector('input[name=eyes-color]');
+var setupInputFireballColor = setupFireballWrap.querySelector('input[name=fireball-color]');
+
+var getRandomInt = function (min, max) {
+  return Math.floor(Math.random() * (max + 1 - min)) + min;
+};
+
+var getRandomElement = function (array) {
+  return array[getRandomInt(0, array.length - 1)];
+};
+
+var onPopupEscPress = function (evt) {
+        //не сделано, если фокус на поле ввода имени, то зактрываться не должно
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
@@ -62,6 +78,7 @@ userNameInput.addEventListener('invalid', function (evt) {
   }
 });
 
+//Не сделана отправка формы - какая команда?
 // Edge не понимает minlength
 userNameInput.addEventListener('input', function (evt) {
   var target = evt.target;
@@ -72,6 +89,19 @@ userNameInput.addEventListener('input', function (evt) {
   }
 });
 
+setupWizardEyes.addEventListener('click', function () {
+  var newEyesColor = getRandomElement(EYES_COLORS);
+  setupWizardEyes.style.fill = newEyesColor;
+  setupInputEyesColor.value = newEyesColor;
+});
+
+
+setupFireballWrap.addEventListener('click', function () {
+  var newFireballWrapColor = getRandomElement(FIREBALL_WRAP_COLORS);
+  setupFireballWrap.style.background = newFireballWrapColor;
+  setupInputFireballColor.value = newFireballWrapColor;
+});
+
 
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 
@@ -80,14 +110,6 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
 
 
 var randomWizards = [];
-
-var getRandomInt = function (min, max) {
-  return Math.floor(Math.random() * (max + 1 - min)) + min;
-};
-
-var getRandomElement = function (array) {
-  return array[getRandomInt(0, array.length - 1)];
-};
 
 var randomWizardName = function () {
   var j = getRandomInt(0, WIZARDS_FIRST_NAMES.length - 1);

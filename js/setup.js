@@ -10,13 +10,24 @@ var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var userDialog = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
-var setupClose = document.querySelector('.setup-close');
+var setupClose = userDialog.querySelector('.setup-close');
+var userNameInput = userDialog.querySelector('.setup-user-name');
+var setupSubmit = userDialog.querySelector('.setup-submit');
+
+var onPopupEscPress = function (evt) {      //не сделано, если фокус на поле ввода имени, то зактрываться не должно
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
 
 var openPopup = function () {
   userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
 };
+
 var closePopup = function () {
   userDialog.classList.add('hidden');
+ document.removeEventListener('keydown', onPopupEscPress);
 };
 
 setupOpen.addEventListener('click', function () {
@@ -34,10 +45,33 @@ setupClose.addEventListener('click', function () {
 });
 
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ENTER_KEYCODE) {
     closePopup();
   }
 });
+
+userNameInput.addEventListener('invalid', function (evt) {
+  if (userNameInput.validity.tooShort) {
+    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else if (userNameInput.validity.tooLong) {
+    userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+  } else if (userNameInput.validity.valueMissing) {
+    userNameInput.setCustomValidity('Обязательное поле');
+  } else {
+    userNameInput.setCustomValidity('');
+  }
+});
+
+// Edge не понимает minlength
+userNameInput.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < 2) {
+    target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else {
+    target.setCustomValidity('');
+  }
+});
+
 
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 

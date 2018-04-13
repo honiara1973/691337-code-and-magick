@@ -13,7 +13,6 @@ var userDialog = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = userDialog.querySelector('.setup-close');
 var userNameInput = userDialog.querySelector('.setup-user-name');
-//var setupSubmit = userDialog.querySelector('.setup-submit');
 
 var setupWizardAppearance = document.querySelector('.setup-wizard-appearance');
 var setupWizardEyes = setupWizardAppearance.querySelector('.wizard-eyes');
@@ -30,8 +29,7 @@ var getRandomElement = function (array) {
 };
 
 var onPopupEscPress = function (evt) {
-      //не сделано, если фокус на поле ввода имени, то зактрываться не должно
-      if (evt.keyCode === ESC_KEYCODE && evt.target !== userNameInput) {
+  if (evt.keyCode === ESC_KEYCODE && evt.target !== userNameInput) {
     closePopup();
   }
 };
@@ -43,7 +41,7 @@ var openPopup = function () {
 
 var closePopup = function () {
   userDialog.classList.add('hidden');
- document.removeEventListener('keydown', onPopupEscPress);
+  document.removeEventListener('keydown', onPopupEscPress);
 };
 
 setupOpen.addEventListener('click', function () {
@@ -67,7 +65,7 @@ setupClose.addEventListener('keydown', function (evt) {
 });
 
 
-userNameInput.addEventListener('invalid', function (evt) {
+userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
   } else if (userNameInput.validity.tooLong) {

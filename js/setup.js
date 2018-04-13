@@ -30,8 +30,8 @@ var getRandomElement = function (array) {
 };
 
 var onPopupEscPress = function (evt) {
-        //не сделано, если фокус на поле ввода имени, то зактрываться не должно
-  if (evt.keyCode === ESC_KEYCODE) {
+      //не сделано, если фокус на поле ввода имени, то зактрываться не должно
+      if (evt.keyCode === ESC_KEYCODE && evt.target !== userNameInput) {
     closePopup();
   }
 };
@@ -66,6 +66,7 @@ setupClose.addEventListener('keydown', function (evt) {
   }
 });
 
+
 userNameInput.addEventListener('invalid', function (evt) {
   if (userNameInput.validity.tooShort) {
     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
@@ -78,8 +79,6 @@ userNameInput.addEventListener('invalid', function (evt) {
   }
 });
 
-//Не сделана отправка формы - какая команда?
-// Edge не понимает minlength
 userNameInput.addEventListener('input', function (evt) {
   var target = evt.target;
   if (target.value.length < 2) {

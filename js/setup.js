@@ -4,9 +4,6 @@
   var WIZARDS_AMOUNT = 4;
   var WIZARDS_FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
   var WIZARDS_LAST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  //var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  //var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-  //var FIREBALL_WRAP_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var userDialog = document.querySelector('.setup');
   var userNameInput = userDialog.querySelector('.setup-user-name');
 
@@ -51,15 +48,6 @@
     evt.preventDefault();
   });
 
-  var getRandomInt = function (min, max) {                      //пока повторяется в colors.js
-    return Math.floor(Math.random() * (max + 1 - min)) + min;
-  };
-
-  /*var getRandomElement = function (array) {
-    return array[getRandomInt(0, array.length - 1)];
-  };
-  */
-
   userNameInput.addEventListener('invalid', function () {
     if (userNameInput.validity.tooShort) {
       userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
@@ -82,16 +70,11 @@
   });
 
   setupWizardEyes.addEventListener('click', function () {
-    var newEyesColor = getRandomElement(EYES_COLORS);
-    setupWizardEyes.style.fill = newEyesColor;
-    setupInputEyesColor.value = newEyesColor;
+    window.randomColor.colorizeElement(setupWizardEyes, window.randomColor.randomEyesColor(), setupInputEyesColor);
   });
 
-
   setupFireballWrap.addEventListener('click', function () {
-    var newFireballWrapColor = getRandomElement(FIREBALL_WRAP_COLORS);
-    setupFireballWrap.style.background = newFireballWrapColor;
-    setupInputFireballColor.value = newFireballWrapColor;
+    window.randomColor.colorizeElement(setupFireballWrap, window.randomColor.randomFireballColor(), setupInputFireballColor);
   });
 
   var similarListElement = userDialog.querySelector('.setup-similar-list');
@@ -102,17 +85,15 @@
   var randomWizards = [];
 
   var randomWizardName = function () {
-    var j = getRandomInt(0, WIZARDS_FIRST_NAMES.length - 1);
+    var j = window.util.getRandomInt(0, WIZARDS_FIRST_NAMES.length - 1);
     return WIZARDS_FIRST_NAMES[j] + ' ' + WIZARDS_LAST_NAMES[j];
   };
 
   for (var i = 0; i < WIZARDS_AMOUNT; i++) {
     var randomWizard = {
       name: randomWizardName(),
-      coatColor: window.randomColor.randomCoatColor,
-      eyesColor: window.randomColor.randomEyesColor
-     // coatColor: getRandomElement(COAT_COLORS),
-     // eyesColor: getRandomElement(EYES_COLORS)
+      coatColor: window.randomColor.randomCoatColor(),
+      eyesColor: window.randomColor.randomEyesColor()
     };
     randomWizards.push(randomWizard);
   }

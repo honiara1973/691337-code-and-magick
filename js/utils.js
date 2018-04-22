@@ -14,6 +14,9 @@ window.util = (function () {
       if (evt.keyCode === ESC_KEYCODE && evt.target !== input) {
         action();
       }
+    },
+    getRandomInt: function (min, max) {
+      return Math.floor(Math.random() * (max + 1 - min)) + min;
     }
   };
 })();

@@ -107,13 +107,31 @@
     return wizardElement;
   };
 
-  var fragment = document.createDocumentFragment();
+  window.backend.load(function (wizards) {
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < wizards.length; i++) {
+      fragment.appendChild(renderWizard(wizards[i]));
+    }
+    similarListElement.appendChild(fragment);
+  });
+
+
+  /* var fragment = document.createDocumentFragment();
 
   for (i = 0; i < randomWizards.length; i++) {
     fragment.appendChild(renderWizard(randomWizards[i]));
   }
   similarListElement.appendChild(fragment);
-
+*/
   userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+  var form = userDialog.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function (response) {
+      userDialog.classList.add('hidden');
+    });
+    evt.preventDefault();
+  });
 
 })();

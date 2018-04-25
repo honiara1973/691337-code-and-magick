@@ -3,58 +3,49 @@
 (function () {
 
   var URL = 'https://js.dump.academy/code-and-magick';
-  var URL_DATA = 'https://js.dump.academy/code-and-magick/data1';
- 
-  
+  var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
+
+  var checkLoad = function (element, onLoad, onError, timeout) {
+
+    element.addEventListener('load', function () {
+      switch (element.status) {
+        case 200:
+          onLoad(element.response);
+          break;
+
+        default:
+          onError('Статус ответа: ' + element.status + ' ' + element.statusText);
+      }
+    });
+
+    element.timeout = timeout;
+
+    element.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+
+    element.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + element.timeout + ' мс.');
+    });
+
+  };
 
   window.backend = {
     save: function (data, onLoad, onError) {
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
 
-      var onError = function (message) {
-        console.error(message);
-      };  
-      
-      xhr.addEventListener('load', function () {
-        switch (xhr.status) {
-          case 200: 
-          onLoad(xhr.response);
-          break;
+      checkLoad(xhr, onLoad, onError, 1000);
 
-        default: 
-          onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-        } 
-      });
-
-    xhr.addEventListener('error', function () {
-        onError('Произошла ошибка соединения');
-      });
-    xhr.addEventListener('timeout', function () {
-        onError('Запрос не успел выполниться за ' + xhr.timeout + ' мс.');
-      });
-
-    xhr.timeout = 1;
-     
-    xhr.open('POST', URL);
-    xhr.send(data);
+      xhr.open('POST', URL);
+      xhr.send(data);
     },
 
     load: function (onLoad, onError) {
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
 
-      xhr.addEventListener('load', function () {
-        switch (xhr.status) {
-          case 200: 
-          onLoad(xhr.response);
-          break;
-
-        default: 
-          onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-        } 
-        
-      });
+      checkLoad(xhr, onLoad, onError, 1000);
 
       xhr.open('GET', URL_DATA);
       xhr.send();

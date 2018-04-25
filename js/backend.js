@@ -5,27 +5,27 @@
   var URL = 'https://js.dump.academy/code-and-magick';
   var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
 
-  var checkLoad = function (element, onLoad, onError, timeout) {
+  var checkLoad = function (xhr, onLoad, onError, timeout) {
 
-    element.addEventListener('load', function () {
-      switch (element.status) {
+    xhr.addEventListener('load', function () {
+      switch (xhr.status) {
         case 200:
-          onLoad(element.response);
+          onLoad(xhr.response);
           break;
 
         default:
-          onError('Статус ответа: ' + element.status + ' ' + element.statusText);
+          onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 
-    element.timeout = timeout;
+    xhr.timeout = timeout;
 
-    element.addEventListener('error', function () {
+    xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
     });
 
-    element.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + element.timeout + ' мс.');
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + ' мс.');
     });
 
   };
